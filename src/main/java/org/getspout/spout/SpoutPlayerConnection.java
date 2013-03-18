@@ -23,20 +23,20 @@ import java.lang.reflect.Field;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import net.minecraft.server.v1_4_R1.EntityPlayer;
-import net.minecraft.server.v1_4_R1.INetworkManager;
-import net.minecraft.server.v1_4_R1.IntHashMap;
-import net.minecraft.server.v1_4_R1.ItemStack;
-import net.minecraft.server.v1_4_R1.MinecraftServer;
-import net.minecraft.server.v1_4_R1.PlayerConnection;
-import net.minecraft.server.v1_4_R1.NetworkManager;
-import net.minecraft.server.v1_4_R1.Packet;
-import net.minecraft.server.v1_4_R1.Packet14BlockDig;
-import net.minecraft.server.v1_4_R1.Packet18ArmAnimation;
-import net.minecraft.server.v1_4_R1.Packet20NamedEntitySpawn;
-import net.minecraft.server.v1_4_R1.Packet24MobSpawn;
-import net.minecraft.server.v1_4_R1.Packet250CustomPayload;
-import net.minecraft.server.v1_4_R1.Packet3Chat;
+import net.minecraft.server.v1_5_R1.EntityPlayer;
+import net.minecraft.server.v1_5_R1.INetworkManager;
+import net.minecraft.server.v1_5_R1.IntHashMap;
+import net.minecraft.server.v1_5_R1.ItemStack;
+import net.minecraft.server.v1_5_R1.MinecraftServer;
+import net.minecraft.server.v1_5_R1.PlayerConnection;
+import net.minecraft.server.v1_5_R1.NetworkManager;
+import net.minecraft.server.v1_5_R1.Packet;
+import net.minecraft.server.v1_5_R1.Packet14BlockDig;
+import net.minecraft.server.v1_5_R1.Packet18ArmAnimation;
+import net.minecraft.server.v1_5_R1.Packet20NamedEntitySpawn;
+import net.minecraft.server.v1_5_R1.Packet24MobSpawn;
+import net.minecraft.server.v1_5_R1.Packet250CustomPayload;
+import net.minecraft.server.v1_5_R1.Packet3Chat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
@@ -227,7 +227,7 @@ public class SpoutPlayerConnection extends PlayerConnection {
 	private void syncedSendPacket(Packet packet, MCCraftPacket[] packetWrappers) {
 		int packetId = -1;
 		try {
-			packetId = packet.k();
+			packetId = packet.n();
 		} catch (Exception e) {
 			return;
 		}

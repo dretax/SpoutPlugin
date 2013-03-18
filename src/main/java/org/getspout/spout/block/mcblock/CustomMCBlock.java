@@ -29,25 +29,25 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.BlockButton;
-import net.minecraft.server.v1_4_R1.BlockDiode;
-import net.minecraft.server.v1_4_R1.BlockHalfTransparant;
-import net.minecraft.server.v1_4_R1.BlockMinecartTrack;
-import net.minecraft.server.v1_4_R1.BlockPiston;
-import net.minecraft.server.v1_4_R1.BlockPumpkin;
-import net.minecraft.server.v1_4_R1.BlockRedstoneLamp;
-import net.minecraft.server.v1_4_R1.BlockRedstoneOre;
-import net.minecraft.server.v1_4_R1.BlockRedstoneTorch;
-import net.minecraft.server.v1_4_R1.BlockStem;
-import net.minecraft.server.v1_4_R1.BlockStepAbstract;
-import net.minecraft.server.v1_4_R1.Entity;
-import net.minecraft.server.v1_4_R1.EntityHuman;
-import net.minecraft.server.v1_4_R1.EntityPlayer;
-import net.minecraft.server.v1_4_R1.EnumMobType;
-import net.minecraft.server.v1_4_R1.IBlockAccess;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.BlockButtonAbstract;
+import net.minecraft.server.v1_5_R1.BlockDiodeAbstract;
+import net.minecraft.server.v1_5_R1.BlockHalfTransparant;
+import net.minecraft.server.v1_5_R1.BlockMinecartTrack;
+import net.minecraft.server.v1_5_R1.BlockPiston;
+import net.minecraft.server.v1_5_R1.BlockPumpkin;
+import net.minecraft.server.v1_5_R1.BlockRedstoneLamp;
+import net.minecraft.server.v1_5_R1.BlockRedstoneOre;
+import net.minecraft.server.v1_5_R1.BlockRedstoneTorch;
+import net.minecraft.server.v1_5_R1.BlockStem;
+import net.minecraft.server.v1_5_R1.BlockStepAbstract;
+import net.minecraft.server.v1_5_R1.Entity;
+import net.minecraft.server.v1_5_R1.EntityHuman;
+import net.minecraft.server.v1_5_R1.EntityPlayer;
+import net.minecraft.server.v1_5_R1.EnumMobType;
+import net.minecraft.server.v1_5_R1.IBlockAccess;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
 
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
@@ -69,14 +69,14 @@ public final class CustomMCBlock implements MethodInterceptor {
 	private org.getspout.spoutapi.material.CustomBlock getCustomBlock(World world, int x, int y, int z) {
 		short[] customIds = SpoutManager.getChunkDataManager().getCustomBlockIds(world.getWorld(), x >> 4, z >> 4);
 		if (customIds != null) {
-			int index = getIndex(world, x, y, z);
+			int index = getIndex(x, y, z);
 			short id = customIds[index];
 			return MaterialData.getCustomBlock(id);
 		}
 		return null;
 	}
 
-	protected static int getIndex(World world, int x, int y, int z) {
+	protected static int getIndex(int x, int y, int z) {
 		return (x & 0xF) << 0xC | (z & 0xF) << 0x8 | (y & 0xFF);
 	}
 
@@ -121,8 +121,8 @@ public final class CustomMCBlock implements MethodInterceptor {
 						field2 = ((Boolean)getField(BlockStepAbstract.class, parent, "a")).booleanValue();
 					} else if (parent instanceof BlockRedstoneLamp) {
 						field2 = ((Boolean)getField(parent, "a")).booleanValue();
-					}  else if (parent instanceof BlockDiode) {
-						field2 = ((Boolean)getField(parent, "c")).booleanValue();
+					}  else if (parent instanceof BlockDiodeAbstract) {
+						field2 = ((Boolean)getField(parent, "a")).booleanValue();
 					} else {
 						// Furnace
 						field2 = ((Boolean)getField(parent, "b")).booleanValue();
@@ -133,9 +133,9 @@ public final class CustomMCBlock implements MethodInterceptor {
 			case IdAndMaterial:
 				proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.material}); break;
 			case IdAndTexture:
-				proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId}); break;
+				proxy = (Block) enc.create(use.constructor, new Object[] {parent.id}); break;
 			case IdTextureAndMaterial:
-				proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId, parent.material}); break;
+				proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.material}); break;
 			case IdBlockAndOther:
 				{
 					Block field2 = ((Block)getField(parent, "cD"));
@@ -153,26 +153,26 @@ public final class CustomMCBlock implements MethodInterceptor {
 			case IdTextureAndTicks:
 				{
 					boolean field3;
-					if (parent instanceof BlockMinecartTrack || parent instanceof BlockPiston || parent instanceof BlockRedstoneOre || parent instanceof BlockButton || parent instanceof BlockPumpkin) {
+					if (parent instanceof BlockMinecartTrack || parent instanceof BlockPiston || parent instanceof BlockRedstoneOre || parent instanceof BlockButtonAbstract || parent instanceof BlockPumpkin) {
 						field3 = ((Boolean)getField(parent, "a")).booleanValue();
 					} else if (parent instanceof BlockRedstoneTorch)  {
 						field3 = ((Boolean)getField(parent, "isOn")).booleanValue();
 					} else {
 						field3 = ((Boolean)getField(parent, "isTicking")).booleanValue();
 					}
-					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId, field3});
+					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, field3});
 				}
 				break;
 			case PressurePlate:
 				{
 					EnumMobType field3 = ((EnumMobType)getField(parent, "a"));
-					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId, field3, parent.material});
+					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, field3, parent.material});
 				}
 				break;
 			case HugeMushroom:
 				{
 					int field4 = ((Integer)getField(parent, "a"));
-					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.material, parent.textureId, field4});
+					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.material, field4});
 				}
 				break;
 			case BlockStem:
@@ -189,14 +189,14 @@ public final class CustomMCBlock implements MethodInterceptor {
 			case IdTextureMaterialAndTransparent:
 				{
 					boolean field4 = ((Boolean)getField(BlockHalfTransparant.class, parent, "a")).booleanValue();
-					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId, parent.material, field4});
+					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.material, field4});
 				}
 				break;
 			case IdTextureDataMaterialAndDrops:
 				{
 					int field3 = (Integer) getField(parent, "a");
 					boolean field5 = ((Boolean)getField(parent, "b")).booleanValue();
-					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, parent.textureId, field3, parent.material, field5});
+					proxy = (Block) enc.create(use.constructor, new Object[] {parent.id, field3, parent.material, field5});
 				}
 				break;
 			default: throw new IllegalStateException("Unknown type " +  use);
@@ -208,18 +208,15 @@ public final class CustomMCBlock implements MethodInterceptor {
 		//Store proper lighting values for opacity
 		final int[] lightOpacity = new int[Block.lightBlock.length];
 		System.arraycopy(Block.lightBlock, 0, lightOpacity, 0, lightOpacity.length);
-		//Store...whatever q is
-		final boolean[] qArray = new boolean[Block.q.length];
-		System.arraycopy(Block.q, 0, qArray, 0, Block.q.length);
 		//Store...whatever s is
 		final boolean[] sArray = new boolean[Block.s.length];
 		System.arraycopy(Block.s, 0, sArray, 0, Block.s.length);
 		//Store...whatever u is
 		final boolean[] uArray = new boolean[Block.u.length];
-		System.arraycopy(Block.u, 0, uArray, 0, Block.u.length);
-		//Store...whatever v is
-		final boolean[] vArray = new boolean[Block.v.length];
-		System.arraycopy(Block.v, 0, vArray, 0, Block.v.length);
+		System.arraycopy(Block.u, 0, sArray, 0, Block.u.length);
+		//Store...whatever w is
+		final boolean[] wArray = new boolean[Block.w.length];
+		System.arraycopy(Block.w, 0, wArray, 0, Block.w.length);
 		//Store proper lighting values for emission
 		final int[] lightEmission = new int[Block.lightEmission.length];
 		System.arraycopy(Block.lightEmission, 0, lightEmission, 0, Block.lightEmission.length);
@@ -239,10 +236,9 @@ public final class CustomMCBlock implements MethodInterceptor {
 		}
 		//Fix values
 		System.arraycopy(lightOpacity, 0, Block.lightBlock, 0, lightOpacity.length);
-		System.arraycopy(qArray, 0, Block.q, 0, qArray.length);
 		System.arraycopy(sArray, 0, Block.s, 0, sArray.length);
 		System.arraycopy(uArray, 0, Block.u, 0, uArray.length);
-		System.arraycopy(vArray, 0, Block.v, 0, vArray.length);
+		System.arraycopy(wArray, 0, Block.w, 0, wArray.length);
 		System.arraycopy(lightEmission, 0, Block.lightEmission, 0, lightEmission.length);
 	}
 
@@ -361,7 +357,7 @@ public final class CustomMCBlock implements MethodInterceptor {
 
 			org.getspout.spoutapi.material.CustomBlock block = getCustomBlock(world, x, y, z);
 			if (block != null) {
-				return block.isProvidingPowerTo(world.getWorld(), x, y, z, org.bukkit.craftbukkit.v1_4_R1.block.CraftBlock.notchToBlockFace(face));
+				return block.isProvidingPowerTo(world.getWorld(), x, y, z, org.bukkit.craftbukkit.v1_5_R1.block.CraftBlock.notchToBlockFace(face));
 			}
 		} else if (method.getName().equals("c") && Arrays.deepEquals(method.getParameterTypes(), new Class[] {World.class, int.class, int.class, int.class, int.class})) {
 			World world = (World) args[0];
@@ -371,7 +367,7 @@ public final class CustomMCBlock implements MethodInterceptor {
 			int face = (Integer) args[4];
 			org.getspout.spoutapi.material.CustomBlock block = getCustomBlock(world, x, y, z);
 			if (block != null) {
-				return block.isProvidingPowerTo(world.getWorld(), x, y, z, org.bukkit.craftbukkit.v1_4_R1.block.CraftBlock.notchToBlockFace(face));
+				return block.isProvidingPowerTo(world.getWorld(), x, y, z, org.bukkit.craftbukkit.v1_5_R1.block.CraftBlock.notchToBlockFace(face));
 			}
 		} else if (method.getName().equals("b") && Arrays.deepEquals(method.getParameterTypes(), new Class[] {World.class, int.class, int.class, int.class, Entity.class})) {
 			World world = (World) args[0];
@@ -413,7 +409,7 @@ public final class CustomMCBlock implements MethodInterceptor {
 						return m.invoke(wrapped, args);
 					}
 
-					def = (!human.b(wrapped) ? 1.0F / hardness / 100.0F : human.a(wrapped) / hardness / 30.0F);
+					def = (!human.a(wrapped) ? 1.0F / hardness / 100.0F : human.a(wrapped, false) / hardness / 30.0F); //TODO EntityHuman.a(Block, boolean) appears to not make any use of the flag variable...
 
 					if (!(item instanceof CustomItem)) {
 						return def;

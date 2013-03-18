@@ -28,7 +28,7 @@ import gnu.trove.list.array.TByteArrayList;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import net.minecraft.server.v1_4_R1.Item;
+import net.minecraft.server.v1_5_R1.Item;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
