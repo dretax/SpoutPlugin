@@ -23,12 +23,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.server.v1_4_R1.EntityHuman;
-import net.minecraft.server.v1_4_R1.IInventory;
-import net.minecraft.server.v1_4_R1.ItemStack;
+import net.minecraft.server.v1_5_R2.EntityHuman;
+import net.minecraft.server.v1_5_R2.IInventory;
+import net.minecraft.server.v1_5_R2.ItemStack;
 
-import org.bukkit.craftbukkit.v1_4_R1.entity.CraftHumanEntity;
-import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_5_R2.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_5_R2.inventory.CraftItemStack;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.InventoryHolder;
 
@@ -164,17 +164,39 @@ public class CustomMCInventory implements IInventory {
 	public void update() {
 	}
 
-	@Override
 	public boolean a_(EntityHuman entityhuman) {
 		return true;
 	}
 
-	@Override
 	public void f() {
 	}
 
 	@Override
 	public void setMaxStackSize(int newSize) {
 		stackSize = newSize;
+	}
+
+	@Override
+	public boolean a(EntityHuman arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean b(int arg0, ItemStack arg1) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean c() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void g() {
+		// TODO Auto-generated method stub
+		
 	}
 }

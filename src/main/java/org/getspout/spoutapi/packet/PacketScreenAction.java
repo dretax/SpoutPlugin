@@ -87,6 +87,8 @@ public class PacketScreenAction implements SpoutPacket {
 					player.openScreen(ScreenType.getType(this.screen), false);
 				}
 				break;
+		default:
+			break;
 		}
 	}
 

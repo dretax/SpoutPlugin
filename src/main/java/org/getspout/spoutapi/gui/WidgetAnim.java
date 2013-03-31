@@ -84,6 +84,8 @@ public enum WidgetAnim {
 					return true;
 				}
 				return false;
+		default:
+			break;
 		}
 		return true;
 	}

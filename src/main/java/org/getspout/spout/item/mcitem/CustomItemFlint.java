@@ -21,16 +21,16 @@ package org.getspout.spout.item.mcitem;
 
 import java.lang.reflect.Field;
 
-import net.minecraft.server.v1_4_R1.EntityHuman;
-import net.minecraft.server.v1_4_R1.EnumAnimation;
-import net.minecraft.server.v1_4_R1.INetworkManager;
-import net.minecraft.server.v1_4_R1.Item;
-import net.minecraft.server.v1_4_R1.ItemStack;
-import net.minecraft.server.v1_4_R1.NetworkManager;
-import net.minecraft.server.v1_4_R1.World;
+import net.minecraft.server.v1_5_R2.EntityHuman;
+import net.minecraft.server.v1_5_R2.EnumAnimation;
+import net.minecraft.server.v1_5_R2.INetworkManager;
+import net.minecraft.server.v1_5_R2.Item;
+import net.minecraft.server.v1_5_R2.ItemStack;
+import net.minecraft.server.v1_5_R2.NetworkManager;
+import net.minecraft.server.v1_5_R2.World;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_4_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_5_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import org.getspout.spout.Spout;
@@ -65,6 +65,11 @@ public class CustomItemFlint extends Item {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private EntityHuman b(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

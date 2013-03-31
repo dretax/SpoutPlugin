@@ -24,15 +24,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_4_R1.Packet18ArmAnimation;
+import net.minecraft.server.v1_5_R2.Packet18ArmAnimation;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.getspout.spout.block.SpoutCraftChunk;
@@ -174,7 +171,7 @@ public class Spout extends JavaPlugin {
 			if (!minecraftVersion.equals(bukkitVersion)) {
 				warnMessage(minecraftVersion, bukkitVersion);
 				hardDisable = true;
-				Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+				Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
 					@Override
 					public void run() {
 						warnMessage(minecraftVersion, bukkitVersion);

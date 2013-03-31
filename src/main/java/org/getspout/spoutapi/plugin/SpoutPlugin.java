@@ -19,8 +19,6 @@
  */
 package org.getspout.spoutapi.plugin;
 
-import java.util.logging.Logger;
-
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
